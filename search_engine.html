@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moses Onoja Benjamin | Full-Stack Developer</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="main.css?v=7.0">
+    <link rel="stylesheet" href="search_engine.css"> </head>
+
+<body> 
+
+    <header>
+        <div class="logo-container">
+            <img src="images/mylogo.jpeg" alt="M.Cyrex Logo" class="logo">
+        </div>
+        <h1 class="dynamic-title">M.Cyrex | Full-Stack Developer</h1>
+        
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        
+        <nav class="nav-links">
+            <ul>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#newspaper-display">The Chronicles</a></li>
+                <li><a href="search_engine.html">Global Search</a></li>
+                <li><a href="#contact">Contact</a></li>
+                
+                <li class="theme-switch-item">
+                    <label class="theme-switch" for="checkbox">
+                        <input type="checkbox" id="checkbox" />
+                        <div class="slider round"></div>
+                    </label>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="search-section" class="search-container" data-aos="fade-up">
+    <h1>Global Search</h1>
+    <p>Explore Afrobeats, Movies, and my Latest Projects</p>
+    
+    <div class="search-box">
+        <input type="text" id="searchInput" oninput="performSearch()" placeholder="Search Music, Movies or Work..." autocomplete="off">
+       <button type="button" onclick="performSearch()">Search</button>
+    </div>
+
+    <div id="results"></div>
+
+    </section>
+
+    <div id="videoModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePlayer()">&times;</span>
+            <iframe id="videoPlayer" width="100%" height="500px" src="" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000 }); // Initializes your animations
+    </script>
+    <script src="script.js"></script> 
+    <script src="search_engine.js"></script> 
+</body>
+</html>

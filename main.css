@@ -1,0 +1,1810 @@
+:root {
+    --text-color: #1a1a1a;
+    --accent-color: #ffcc00;
+    --card-bg: rgba(255, 255, 255, 0.4); /* Your Glass Effect for Light Mode */
+}
+
+[data-theme="dark"] {
+    --text-color: #ffffff;
+    --accent-color: #ffcc00;
+    --card-bg: rgba(25, 25, 25, 0.7);    /* Your Glass Effect for Dark Mode */
+}
+
+
+/* --- 1. GLOBAL RESET --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* --- 2. THE MASTER BODY (Animation + Colors) --- */
+body {
+    /* 1. Animation & Background Foundation */
+    background: linear-gradient(-45deg, #0a192f, #7b2cbf, #008080, #ff6b6b);
+    background-size: 400% 400%;
+    animation: slowFlow 15s ease infinite;
+    
+    /* 2. Text & Transition Settings */
+    color: var(--text-color);
+    transition: background-color 0.5s ease, color 0.5s ease;
+    min-height: 100vh; /* Ensures the background covers the whole page */
+}
+
+/* --- 3. DARK MODE OVERRIDE --- */
+/* This will disable the animation only when the theme is specifically "dark" */
+[data-theme="dark"] body {
+    background: #0a192f !important; 
+    animation: none !important;
+}
+
+/* --- 4. ANIMATION KEYFRAMES (Keep this at the bottom of your CSS) --- */
+@keyframes slowFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+/* --- 2. THE HEADER (Responsive & Centered) --- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: clamp(70px, 8vh, 90px);
+    padding: 0 clamp(4%, 6vw, 8%); 
+    
+    /* Make the header adjust to theme */
+    background: rgba(255, 255, 255, 0.1); /* Very subtle tint */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 10000;
+    
+    /* Border: Use a subtle color that works on both Navy and White */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+    transition: background 0.3s ease;
+}
+
+/* Update for Dark Mode */
+[data-theme="dark"] header {
+    background: rgba(0, 0, 0, 0.3); /* Darker glass for dark mode */
+}
+
+.dynamic-title {
+    /* ... keep your existing font sizes and animation ... */
+    font-size: clamp(0.85rem, 2.5vw, 1.2rem);
+    font-weight: 800;
+    
+    /* Optimized for Navy Background: Electric Blue, Cyan, and Vibrant Purple */
+    background: linear-gradient(90deg, #64ffda, #569aff, #b393ff, #64ffda);
+    background-size: 300%;
+    
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: flow 8s linear infinite;
+    text-align: center;
+    padding: 0 10px;
+    white-space: nowrap;
+}
+
+/* LOGO: Ensures it stays a perfect square and doesn't stretch */
+.logo-container { 
+    width: clamp(40px, 5vw, 50px); 
+    height: clamp(40px, 5vw, 50px); 
+    flex-shrink: 0; /* Prevents logo from being squashed */
+}
+
+.logo { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: contain; /* Better than 'cover' for logos */
+    border-radius: 8px; 
+}
+
+/* --- 3. AUTOMATIC GRID FOR YOUR CONTENT --- */
+/* Add this class to your Technical Highlights section */
+.auto-grid {
+    display: grid;
+    /* AUTOMATIC: Boxes stack when they hit 300px width */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    width: 90%;
+    max-width: 1250px;
+    margin: 40px auto;
+}
+
+@keyframes flow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+
+/* --- STEP 1: ALWAYS HIDDEN TOGGLE MENU --- */
+
+/* 1. Show the Toggle on ALL screens */
+.menu-toggle {
+    display: flex; /* Changed from 'none' to 'flex' for laptop */
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    z-index: 10001;
+}
+
+.bar {
+    width: 28px;
+    height: 3px;
+    background-color: #2d32b8;
+    border-radius: 5px;
+}
+
+/* --- STEP 1: CLICKABLE & COLORFUL MENU --- */
+.nav-links {
+    display: none;
+    position: absolute;
+    top: 90px;
+    right: 5%;
+    width: 260px;
+      /* ADD THESE THREE LINES RIGHT HERE */
+    height: auto !important; 
+    min-height: auto;
+    overflow-y: visible;
+
+    
+    /* THE UPGRADE: Glassmorphism */
+    background: rgba(255, 255, 255, 0.05); /* Very subtle transparency */
+    backdrop-filter: blur(20px);          /* The "Frosted" look */
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+}
+
+/* Make it look even better in Dark Mode */
+[data-theme="dark"] .nav-links {
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-links.active {
+    display: block;
+}
+
+/* --- THE CLICKABLE LINKS --- */
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-color); /* Uses your theme variable! */
+    font-weight: 600; 
+    font-size: 1.1rem;
+    display: block;
+    padding: 12px 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    /* Soft semi-transparent background */
+    background: rgba(255, 255, 255, 0.05); 
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Hover Effect: The "Pro" Interaction */
+.nav-links a:hover {
+    background: var(--accent-color); /* Uses your Gold/Electric accent */
+    color: #ffffff; 
+    transform: translateX(10px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+
+/* --- STEP 2.5: THE HERO INTRODUCTION --- */
+.hero-intro {
+    padding: 100px 10% !important;
+    /* High-End Glass Look */
+    background: rgba(255, 255, 255, 0.03); 
+    backdrop-filter: blur(10px);
+    border-radius: 30px;
+    margin: 40px auto;
+    text-align: center;
+    max-width: 1200px;
+}
+
+/* --- THE PROFILE IMAGE (Theme-Aware) --- */
+.profile-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 50px auto;
+}
+
+.profile-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    /* Uses a variable border that changes based on theme */
+    border: 8px solid var(--border-color, #f4f6ff); 
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    transition: border 0.3s ease;
+}
+
+.profile-container .pulse-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    /* Uses your accent color for the pulse */
+    background: var(--accent-color, #2d32b8); 
+    top: 0;
+    left: 0;
+    animation: profile-pulse 2s infinite;
+    z-index: -1;
+}
+
+
+/* Make your titles and text stand out against the dark blue */
+.hero-content h1, 
+.hero-content h2, 
+.hero-content p {
+    color: #ffffff !important; /* Force pure white for maximum contrast */
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3); /* Adds a tiny shadow to make text lift off the blue */
+    font-weight: 600; /* Makes the text slightly bolder */
+}
+
+/* --- THE TEXT HIERARCHY --- */
+.hero-text h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+}
+
+.hero-text h3 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+
+.hero-text p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #e0e0e0;
+    opacity: 0.8;
+    max-width: 800px;
+    margin: 0 auto;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    margin-top: 15px;
+}
+
+/* --- MOBILE RESPONSIVENESS (CONSOLIDATED) --- */
+@media (max-width: 768px) {
+    .hero-intro {
+        padding: 60px 8% !important;
+    }
+
+    .profile-container {
+        width: 150px;
+        height: 150px;
+        margin-bottom: 30px;
+    }
+
+    .hero-text h2 { font-size: 1.1rem; }
+    .hero-text h3 { font-size: 1.8rem; }
+}
+
+/* --- STEP 2: VIDEO SHOWCASE --- */
+.video-showcase {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;
+    padding: 100px 10% !important;
+    
+    /* Updated for Glassmorphism */
+    background: rgba(255, 255, 255, 0.03); 
+    backdrop-filter: blur(15px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.video-container {
+    width: 100%;
+    max-width: 700px;
+    text-align: center;
+}
+
+.portfolio-video {
+    width: 100%;
+    border-radius: 20px;
+    /* Deeper shadow for that "elevated" tech look */
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5); 
+    background-color: #000;
+}
+
+.video-container h3 {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: #FFD700; /* Uses your Gold/Electric accent */
+    font-weight: 700;
+}
+
+/* --- STEP 3: ABOUT SECTION (FIXED NAMES) --- */
+#about {
+    padding: 80px 10% !important; 
+    
+    /* Glassmorphism: Removes the solid white background */
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    
+    border-radius: 30px;
+    max-width: 1200px;
+    margin: 40px auto;
+    text-align: left;
+}
+
+#about h2 {
+    font-size: 2.2rem;
+    color: var(--accent-color); /* Uses your Gold/Electric accent */
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+
+#about p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: white; /* Theme-aware text */
+    opacity: 1rem;
+    margin-bottom: 40px;
+}
+
+/* --- TECHNICAL HIGHLIGHTS BOX --- */
+.technical-wins {
+    /* Glassmorphism instead of solid light blue */
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    
+    padding: 40px;
+    border-radius: 20px;
+    /* Keeps your signature accent as a highlight */
+    border-left: 6px solid var(--accent-color); 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.technical-wins h3 {
+    margin-bottom: 20px;
+    color: var(--accent-color);
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.technical-wins li {
+    margin-bottom: 15px;
+    font-size: 1.05rem;
+    color: white;
+    opacity: 0.85; /* Softens the list items for a professional feel */
+    display: flex;
+    align-items: flex-start;
+}
+
+/* Updated bullet point color */
+.technical-wins li::before {
+    content: "•";
+    color: var(--accent-color);
+    font-weight: bold;
+    display: inline-block; 
+    width: 1em;
+    margin-left: -1em;
+}
+
+/* MOBILE FIX */
+@media (max-width: 768px) {
+    #about {
+        padding: 60px 8% !important;
+    }
+    #about h2 {
+        font-size: 1.8rem;
+    }
+    .technical-wins {
+        padding: 25px;
+    }
+}
+
+/* --- SERVICES SECTION MASTER --- */
+.services-container {
+    padding: 100px 8% !important;
+    background: transparent; /* Allows your animated background to show */
+    text-align: center;
+}
+
+.services-grid {
+    display: flex;
+    flex-wrap: wrap; /* This ensures cards move to the next line automatically */
+    justify-content: center;
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.service-card {
+    width: 330px; /* Perfect width for Laptop */
+    height: 420px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+.card-inner.is-flipped {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 20px;
+    padding: 35px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* FRONT: New Glassmorphism Look */
+.card-front {
+    background: rgba(255, 255, 255, 0.08); 
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-front i {
+    font-size: 3.5rem;
+    color: var(--accent-color); /* Uses your theme gold/blue */
+    margin-bottom: 20px;
+}
+
+.card-front h3 {
+    color: var(--accent-color);
+    font-weight: 800;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+.card-front p {
+    color: white;
+    opacity: 0.9;           /* Slightly less transparent for better visibility */
+    font-size: 1rem;
+    line-height: 1.6;
+    font-weight: 500;       /* Slightly thicker than standard text */
+    padding: 0 10px;        /* Adds breathing room */
+}
+.card-back p {
+    color: white;
+    opacity: 0.9;           /* Slightly less transparent for better visibility */
+    font-size: 1rem;
+    line-height: 1.6;
+    font-weight: 500;       /* Slightly thicker than standard text */
+    padding: 0 10px;        /* Adds breathing room */
+}
+/* This controls the look of your new title */
+.section-title {
+    color: #FFD700 !important;      /* Gold Color */
+    font-size: 2.5rem;             /* Big size */
+    font-weight: 900 !important;   /* Extra Bold */
+    text-align: center;
+    margin-bottom: 50px;           /* Space between title and cards */
+    text-transform: uppercase;     /* Professional look */
+    letter-spacing: 2px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5); /* Adds sharpness */
+}
+
+/* BACK: Luxury Gradient */
+.card-back {
+    background: linear-gradient(135deg, rgba(10, 25, 47, 0.95), rgba(45, 50, 184, 0.95));
+    color: white;
+    transform: rotateY(180deg);
+    text-align: center;
+}
+
+/* The "Get Started" Link/Button */
+.service-card .btn-small {
+    background: var(--accent-color);
+    color: #ffffff !important;
+    font-weight: 900;          /* Maximum boldness for the call-to-action */
+    padding: 12px 25px;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* Adds depth so it looks like a button */
+    border: 1px solid rgba(255,255,255,0.2);
+}
+.service-card span {
+    background: rgba(255, 215, 0, 0.15); /* Soft Gold background */
+    color: #FFD700 !important;           /* Bright Gold text */
+    padding: 4px 10px;                   /* Padding makes them look like badges */
+    border-radius: 4px;                  /* Rounded corners */
+    font-size: 0.85rem;                  /* Small but readable size */
+    font-weight: 800 !important;         /* EXTRA BOLD for sharpness */
+    text-transform: uppercase;           /* Looks professional */
+    margin-right: 8px;                   /* Space between badges */
+    display: inline-block;               /* Ensures they sit nicely next to each other */
+    border: 1px solid #FFD700;           /* Crisp Gold border */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3); /* The "pop" shadow */
+}
+/* MOBILE FIX */
+@media (max-width: 768px) {
+    .service-card {
+        width: 100%; /* Spans the full width of the phone */
+        max-width: 350px;
+    }
+}
+
+/* --- STEP 5: PROJECT SECTION (FIXED & CLEAN) --- */
+.project-container {
+    padding: 100px 8% !important;
+    background: transparent; /* No longer a solid white block */
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.project-container h2 {
+    font-size: 2.2rem;
+    color: var(--accent-color); /* Matches your accent scheme */
+    margin-bottom: 10px;
+    font-weight: 800;
+}
+
+.project-container p {
+    color: #e0e0e0;
+    opacity: 0.8;
+    margin-bottom: 50px;
+    line-height: 1.6;
+    font-size: 1.3rem;
+}
+.project-card span {
+    background: rgba(255, 215, 0, 0.15); /* Soft Gold background */
+    color: #FFD700 !important;           /* Bright Gold text */
+    padding: 4px 10px;                   /* Padding makes them look like badges */
+    border-radius: 4px;                  /* Rounded corners */
+    font-size: 0.85rem;                  /* Small but readable size */
+    font-weight: 800 !important;         /* EXTRA BOLD for sharpness */
+    text-transform: uppercase;           /* Looks professional */
+    margin-right: 8px;                   /* Space between badges */
+    display: inline-block;               /* Ensures they sit nicely next to each other */
+    border: 1px solid #FFD700;           /* Crisp Gold border */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3); /* The "pop" shadow */
+}
+
+/* The Grid Boxes */
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 60px;
+}
+
+.project-card {
+    /* Glassmorphic Project Card */
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    
+    padding: 30px;
+    border-radius: 20px;
+    text-align: left;
+    
+    /* Stronger accent border for the tech feel */
+    border-left: 6px solid var(--accent-color);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-10px); /* Subtle lift on hover */
+}
+
+/* --- THE SWIPER --- */
+.mySwiper {
+    width: 100%;
+    height: 450px;
+    border-radius: 25px;
+    overflow: hidden;
+    margin-top: 30px;
+    /* Adding a subtle border to match the glass look */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Modern Swiper Dots: Using CSS Variables for Theme Harmony */
+.swiper-pagination-bullet {
+    background: rgba(255, 255, 255, 0.3) !important;
+    opacity: 1 !important;
+    transition: all 0.3s ease !important;
+}
+
+.swiper-pagination-bullet-active {
+    background: var(--accent-color) !important; /* Gold/Electric Accent */
+    width: 25px !important;
+    border-radius: 5px !important;
+}
+
+/* MOBILE FIX */
+@media (max-width: 768px) {
+    .project-container {
+        padding: 60px 5% !important;
+    }
+    .mySwiper {
+        height: 300px;
+    }
+    .project-container h2 {
+        font-size: 1.8rem;
+    }
+}
+
+
+/* --- STEP 6: THE BOLD STATS COUNTER --- */
+.stats-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    /* Glassmorphic background */
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(15px);
+    padding: 100px 8% !important;
+    gap: 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-box {
+    text-align: center;
+    flex: 1;
+    min-width: 220px;
+    padding: 20px;
+}
+
+/* The Animated Number */
+.stat-box h2.counter {
+    font-size: 4.5rem;
+    font-weight: 900;
+    color: #00f2ff; /* Theme-aware */
+    margin-bottom: 5px;
+    letter-spacing: -2px;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+}
+
+/* The Percent/Plus Sign */
+.stat-box h2.counter::after {
+    content: "+"; /* Switched to '+' as it's more versatile for stats */
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent-color); /* Your Gold/Electric accent */
+    margin-left: 5px;
+}
+
+/* The Label */
+.stat-box p {
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Mobile Fix */
+@media (max-width: 768px) {
+    .stat-box h2.counter {
+        font-size: 3.2rem;
+    }
+    .stats-container {
+        padding: 60px 5% !important;
+    }
+}
+
+/* --- STEP 7: FEEDBACK SWIPER --- */
+.feedback-container {
+    padding: 100px 8% !important;
+    background: transparent; /* Seamless blend with your main background */
+    text-align: center;
+}
+
+.feedback-container h2.section-title {
+    font-size: 2.2rem;
+    color: var(--accent-color); /* Theme-aware accent */
+    margin-bottom: 50px;
+    font-weight: 800;
+}
+
+/* The Review Card - Upgraded to Glass */
+.feedback-card {
+    background: rgba(255, 255, 255, 0.05); /* Frosted glass */
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    
+    padding: 50px 40px;
+    border-radius: 30px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    margin: 10px;
+    transition: transform 0.3s ease;
+}
+
+.feedback-card p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: white;
+    opacity: 1rem;
+    font-style: italic;
+    margin-bottom: 25px;
+}
+
+.feedback-card h4 {
+    font-size: 1.1rem;
+    color: var(--accent-color);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* CUSTOM SWIPER DOTS */
+.feedbackSwiper .swiper-pagination-bullet {
+    background: var(--text-color) !important;
+    opacity: 0.2;
+}
+
+.feedbackSwiper .swiper-pagination-bullet-active {
+    opacity: 1;
+    background: var(--accent-color) !important;
+    width: 25px !important;
+    border-radius: 5px !important;
+}
+
+
+/* --- STEP 8: CONTACT SECTION --- */
+.contact-container {
+    padding: 100px 8% !important;
+    /* High-end glass transition */
+    background: rgba(45, 50, 184, 0.4); 
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    text-align: center;
+}
+
+.contact-container h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 40px;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.contact-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    border-radius: 20px;
+    text-decoration: none;
+    color: white;
+    font-weight: 700;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1rem;
+}
+
+.contact-card:hover {
+    /* Uses accent color for a sharp pop */
+    background: var(--accent-color);
+    color: #ffffff;
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+/* --- STEP 9: FLOATING CALL BUTTON --- */
+.floating-call {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 70px;
+    height: 70px;
+    
+    /* Using your accent color instead of flat green */
+    background: var(--accent-color);
+    color: #ffffff;
+    
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    z-index: 9999;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.floating-call:hover {
+    transform: scale(1.1);
+}
+
+/* THE PULSE ANIMATION */
+.pulse-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: var(--accent-color);
+    animation: pulse-animation 2s infinite;
+    z-index: -1;
+}
+
+@keyframes pulse-animation {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(1.8); opacity: 0; }
+}
+
+/* Mobile Fix */
+@media (max-width: 768px) {
+    .floating-call {
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        font-size: 25px;
+    }
+}
+
+
+/* --- STEP 10: THE LUXURY FOOTER --- */
+footer {
+    padding: 60px 5% !important;
+    
+    /* Luxury Glassmorphism Footer */
+    background: rgba(0, 0, 0, 0.4); 
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    
+    color: white;
+    text-align: center;
+}
+
+/* Add a "Signature" accent line using your variable */
+footer::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 4px;
+    background: var(--accent-color);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+footer p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+    opacity: 0.8;
+}
+
+/* The Copyright Line */
+footer p:first-child {
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #ffffff;
+    opacity: 1;
+}
+
+/* The Mobile Performance Line */
+footer p:last-child {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--accent-color); /* Matches your accent scheme */
+    margin-top: 15px;
+    font-style: italic;
+}
+
+
+/* --- 1. THE EXTERNAL SPACE --- */
+.newspaper-display {
+    width: 100%;
+    padding: 120px 20px 100px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Changed from #f0f0f0 to transparent to maintain background flow */
+    background: transparent; 
+}
+
+.project-title {
+    font-size: 2.8rem;
+    margin-bottom: 10px;
+    font-weight: 800;
+    color: var(--text-color); /* Theme-aware */
+}
+
+.project-description {
+    margin-bottom: 70px;
+    max-width: 800px;
+    text-align: center;
+    color: #ffffff;
+    opacity: 0.8;
+}
+
+
+/* --- 2. THE PHYSICAL PAPER LOOK --- */
+.newspaper-wrapper {
+    /* Blend: Newsprint color with slight transparency for the glass effect */
+    background: rgba(253, 251, 247, 0.95); 
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    
+    padding: 50px;
+    max-width: 1050px;
+    width: 100%;
+    position: relative;
+    border-radius: 4px; /* Slight roundness for a cleaner look */
+    
+    /* Refined shadow to work on your Navy background */
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+
+
+/* --- 3. THE NEWSPAPER CONTENT --- */
+.news-masthead {
+    text-align: center;
+    /* Using rgba for a softer, more professional "ink" look */
+    border-bottom: 5px solid rgba(0, 0, 0, 0.8);
+    border-top: 2px solid rgba(0, 0, 0, 0.8);
+    padding: 20px 0;
+    margin-bottom: 30px;
+}
+
+
+.news-logo {
+    /* Using a fallback stack for a cleaner "Newspaper" look */
+    font-family: 'Playfair Display', 'Times New Roman', serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    letter-spacing: -2px;
+    color: #000;
+}
+
+.news-main-grid {
+    display: grid;
+    /* This grid ratio is perfect for the main story vs sidebar split */
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+}
+
+.headline {
+    font-family: 'Georgia', serif;
+    font-size: 2.2rem;
+    line-height: 1.1; /* Slightly increased for better readability */
+    margin-bottom: 15px;
+    font-weight: 900;
+    color: #1a1a1a;
+}
+
+/* --- 4. THE SIDEBAR --- */
+.sidebar {
+    /* Using a softer border that matches the glass aesthetic */
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 20px;
+}
+
+/* We removed the .newspaper-wrapper block because it is already 
+   defined in your master structure. */
+
+.main-article p {
+    text-align: justify;
+    line-height: 1.6; /* Slight bump for readability */
+    font-family: 'Georgia', serif;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* --- NEWSPAPER COMPONENTS --- */
+
+/* Adds a subtle separator that fits the glass aesthetic */
+.article-spacer {
+    border: 0;
+    border-top: 1px dashed rgba(0, 0, 0, 0.2); 
+    margin: 30px 0;
+}
+
+/* Bottom status/footer strip for the newspaper page */
+.news-bottom-strip {
+    border-top: 2px solid rgba(0, 0, 0, 0.8);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+    margin-top: 30px;
+    padding: 15px 0;
+    text-align: center;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: #444;
+}
+
+.newspaper-display h2 {
+    font-family: 'Playfair Display', 'Times New Roman', serif;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    font-weight: 800;
+    color: black; /* Theme-aware */
+}
+/* --- NEWSPAPER IMAGE STYLING --- */
+.news-img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    object-position: top;
+    /* Softened border to match the glass theme */
+    border: 1px solid rgba(0, 0, 0, 0.1); 
+    margin-bottom: 15px;
+    border-radius: 4px; /* Slight rounding for a premium feel */
+}
+.project-meta {
+    font-size: 1rem;
+    color: #00f5ff;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+/* Styling for your project newspaper header */
+.project-title {
+    color: #FFD700 !important;      /* The Gold color we discussed */
+    font-size: 1.5rem;             /* Large headline size */
+    font-weight: 900 !important;   /* Extra Bold for impact */
+    text-transform: uppercase;     /* The "Newspaper" look */
+    letter-spacing: 2px;           /* Gives the letters breathing room */
+    text-shadow: 0 4px 6px rgba(0,0,0,0.5); /* Deep shadow for sharpness */
+    margin-bottom: 25px;           /* Proper spacing */
+    border-bottom: 4px solid #FFD700; /* The professional newspaper line */
+    display: inline-block;         /* Keeps the line tight to the text */
+    padding-bottom: 5px;           /* Spacing between text and the line */
+}
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+@media screen and (max-width: 768px) {
+    /* Instead of forcing html/body, we constrain the container */
+    .newspaper-wrapper {
+        width: 95% !important;
+        margin: 10px auto !important;
+        padding: 20px !important;
+        box-sizing: border-box !important;
+    }
+
+    .news-img {
+        height: 250px !important; /* Reduces image size for smaller screens */
+    }
+}
+
+/* --- SCOPED MOBILE RESPONSIVENESS --- */
+@media screen and (max-width: 768px) {
+    /* Target ONLY the newspaper elements */
+    .newspaper-wrapper h1, 
+    .newspaper-wrapper .the-developer-chronicle-title {
+        font-size: 1.8rem !important;
+        line-height: 1.2 !important;
+    }
+
+    .news-main-grid {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    /* Target specific paragraphs within the newspaper only */
+    .newspaper-wrapper .main-article p,
+    .newspaper-wrapper .sidebar p {
+        text-align: left !important;
+        line-height: 1.4 !important;
+        font-size: 1rem !important;
+        margin-bottom: 10px !important;
+    }
+
+    .news-img {
+        width: 100% !important;
+        height: auto !important;
+    }
+}
+
+
+/* --- MASTER MOBILE RESPONSIVENESS (Scoped to Newspaper) --- */
+@media screen and (max-width: 768px) {
+    .newspaper-wrapper {
+        width: 98% !important;
+        padding: 10px !important;
+        margin: 5px auto !important;
+        box-sizing: border-box !important;
+    }
+
+    .newspaper-wrapper h1 {
+        font-size: 1.8rem !important;
+        margin: 5px 0 !important;
+        line-height: 1.1 !important;
+    }
+
+    .news-main-grid {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .newspaper-wrapper .main-article p,
+    .newspaper-wrapper .sidebar p {
+        text-align: left !important;
+        line-height: 1.4 !important;
+        font-size: 1rem !important;
+    }
+
+    .news-img {
+        width: 100% !important;
+        height: auto !important;
+        margin: 5px 0 !important;
+    }
+}
+
+/* --- 1. THE MAIN ANCHOR --- */
+#catalog-section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 700px;
+  padding: 40px 0;
+  text-align: center;
+}
+
+/* --- 2. THE BOOK (Portable Laptop Size) --- */
+.book {
+  width: 400px;
+  height: 500px;
+  perspective: 2000px; /* Stronger 3D depth */
+  position: relative;
+  margin: 0 auto;
+}
+
+.paper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-style: preserve-3d;
+  transform-origin: left;
+  transition: transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.front, .back {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+}
+
+.back { transform: rotateY(180deg); }
+
+/* The flip logic for JavaScript */
+.paper.flipped { 
+    transform: rotateY(-180deg) !important;
+}
+
+/* --- 3. THE RED BUTTONS (Locked to side) --- */
+#prev-btn, #next-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1000; /* Higher than pages */
+  background: red;
+  color: white;
+  border: none;
+  padding: 15px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+#prev-btn { left: 10px; }
+#next-btn { right: 10px; }
+
+/* --- 4. THE BOUNCER (Hiding from Phone) --- */
+@media screen and (max-width: 600px) {
+    /* This completely removes the catalog and arrows from mobile */
+    #catalog-section, 
+    #prev-btn, 
+    #next-btn, 
+    .desktop-only {
+        display: none !important;
+    }
+}
+/* KEEP ALL YOUR Z-INDEXES (#p1 to #p21) HERE */
+#p1 { z-index: 21; }
+#p2 { z-index: 20; }
+#p4 { z-index: 19; }
+#p5 { z-index: 18; }
+#p6 { z-index: 17; }
+#p7 { z-index: 16; }
+#p8 { z-index: 15; }
+#p9 { z-index: 14; }
+#p10 { z-index: 13; }
+#p11 { z-index: 12; }
+#p12 { z-index: 11; }
+#p13 { z-index: 10; }
+#p14 { z-index: 9; }
+#p15 { z-index: 8; }
+#p16 { z-index: 7; }
+#p17 { z-index: 6; }
+#p18 { z-index: 5; }
+#p19 { z-index: 4; }
+#p20 { z-index: 2; }
+#p21 { z-index: 1; }
+
+.paper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --- THE BUTTONS FIX (NO LONGER FLOATING) --- */
+button {
+  position: absolute;    /* CHANGED FROM FIXED: They now stay with the book */
+  top: 50%;
+  transform: translateY(-50%);
+  background: red;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: white;
+  z-index: 999;
+}
+
+#prev-btn {
+  left: 20px;            /* Locked to the left of the Catalog section */
+}
+
+#next-btn {
+  right: 20px;           /* Locked to the right of the Catalog section */
+}
+
+button:hover i {
+  color: #636363;
+}
+
+/* --- 1. DESKTOP RULES (Laptop) --- */
+@media screen and (min-width: 601px) {
+    .mobile-only { display: none !important; }
+    .desktop-only { display: block !important; }
+}
+
+/* --- 2. MOBILE RULES (Phone) --- */
+@media screen and (max-width: 600px) {
+    /* This kills the catalog and its red arrows completely so they don't sit on text */
+    .desktop-only, #prev-btn, #next-btn, .book-controls { 
+        display: none !important; 
+    }
+
+    .mobile-only {
+        display: flex !important;
+        flex-direction: column;
+        align-items: center;
+        background: #000 !important; /* Luxury dark feel */
+        padding: 40px 0;
+        min-height: 100vh;
+    }
+
+    .mirror-viewport {
+        position: relative;
+        height: 400px;
+        width: 100%;
+        perspective: 1200px; /* Essential for the 3D depth */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    .mirror-item {
+        position: absolute !important; /* This stops them from stacking like a list */
+        width: 260px;
+        height: 380px;
+        transition: all 0.6s ease;
+        opacity: 0;
+    }
+    
+    /* 3D Mirror Positions */
+    .mirror-item.active { 
+        opacity: 1; 
+        transform: translate3d(0, 0, 50px); 
+        z-index: 10; 
+    }
+    .mirror-item.prev { 
+        opacity: 0.4; 
+        transform: translate3d(-120px, 0, -200px) rotateY(40deg); 
+        z-index: 5;
+    }
+    .mirror-item.next { 
+        opacity: 0.4; 
+        transform: translate3d(120px, 0, -200px) rotateY(-40deg); 
+        z-index: 5;
+    }
+
+    .mirror-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 15px;
+    }
+}
+
+
+
+
+
+/* --- THE ULTIMATE SLIDER REPAIR --- */
+#mobile-slider-area {
+    position: relative;
+    padding: 60px 20px;
+    margin: 40px auto;
+    text-align: center;
+    background: #1a1a1a;
+    border-radius: 15px;
+    max-width: 1200px;
+}
+
+.section-title { color: #ffffff; margin-bottom: 30px; }
+
+/* Button Control System */
+.slider-controls {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 40px;
+    position: relative;
+    z-index: 10;
+}
+
+.m-btn {
+    background: #ffffff;
+    color: #000;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: 0.3s;
+}
+
+.m-btn:hover { background: #ff4b2b; color: white; }
+
+/* Mirror Viewport Engine */
+.mirror-viewport {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 450px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.mirror-item {
+    position: absolute;
+    width: 320px;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+}
+
+.mirror-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* 3D Viewport States */
+.mirror-item.active { opacity: 1; transform: scale(1.1) translateX(0); z-index: 5; }
+.mirror-item.prev { opacity: 0.5; transform: scale(0.8) translateX(-110%); z-index: 3; }
+.mirror-item.next { opacity: 0.5; transform: scale(0.8) translateX(110%); z-index: 3; }
+
+/* Mobile "Peeking" View */
+@media (max-width: 768px) {
+    .mirror-viewport { height: 350px; }
+    .mirror-item { width: 75%; }
+    .mirror-item.prev { transform: scale(0.8) translateX(-85%); }
+    .mirror-item.next { transform: scale(0.8) translateX(85%); }
+}
+
+
+
+
+/* --- DASHBOARD COMPONENT ALIGNMENT --- */
+/* Container for the whole section */
+.dashboard-section {
+    padding: 40px 20px;
+    background: #0a0a0a; /* Deep dark background */
+}
+
+/* THE GRID: Two columns on laptop, one on mobile */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.dash-card {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+
+.dash-header {
+    background: #222;
+    color: #00ffcc; /* That Green/Neon you love */
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.dash-body {
+    padding: 30px;
+    text-align: center;
+    color: #fff;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+
+/* Fix for the Converter Box alignment */
+.converter-box {
+    width: 100%;
+    max-width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.converter-box input, 
+.converter-box select {
+    background: #2a2a2a;
+    color: #fff;
+    border: 1px solid #444;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+#conversion-result {
+    margin-top: 15px;
+    font-size: 1.5rem;
+    color: #ffcc00;
+    font-weight: bold;}
+
+    .clock-container {
+    padding: 10px 25px;
+    background: #1a1a1a;
+    border-radius: 50px; /* This makes it look like a sleek pill/capsule */
+    display: block;      /* Changed from inline-block */
+    margin: 20px auto;   /* This is the "magic" that centers it perfectly */
+    width: fit-content;  /* Ensures the black box only wraps around the time */
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Adds a little depth */
+}
+
+.clock-text {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #00ffcc; 
+    letter-spacing: 2px;
+}
+
+/* This targets the header inside your contact section */
+#contact-section h2 {
+    text-align: center !important; /* Forces it to the middle */
+    width: 100%;                  /* Ensures it takes up the full width to find the center */
+    margin-bottom: 30px;          /* Gives some space before the form starts */
+    color: #ffcc00;               /* Optional: Matches your gold theme */
+    display: block;
+}
+#contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column; /* This stacks everything vertically */
+    gap: 20px; /* This creates a perfect gap so nothing overlaps */
+    padding: 20px;
+}
+
+#contact-form input, 
+#contact-form textarea {
+    width: 100%; /* Makes sure they take up the full width */
+    padding: 15px;
+    background: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    color: #333 !important;
+    font-size: 16px;
+    box-sizing: border-box; /* This is CRITICAL to prevent overlapping */
+}
+
+#contact-form button {
+    width: 100%; /* Makes the button the same width as the boxes */
+    padding: 18px;
+    background: #ffcc00;
+    color: #000;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative; /* Forces it to stay in the natural flow */
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+/* --- MOBILE BOX ARRANGEMENT --- */
+@media (max-width: 768px) {
+    /* 1. Makes the Technical Highlights box fill the width properly */
+    .technical-wins {
+        padding: 20px;
+        margin: 10px auto;
+        width: 95%; /* Gives it a little space from the phone edges */
+    }
+
+    /* 2. Fixes the Bullet Points and Text alignment */
+    .technical-wins ul {
+        display: flex;
+        flex-direction: column; /* STACKS the points so they don't overlap */
+        gap: 20px;
+        padding-left: 0;
+        list-style: none;
+    }
+
+    .technical-wins li {
+        display: block; /* Ensures each highlight gets its own line */
+        text-align: left;
+        line-height: 1.5;
+        font-size: 0.95rem;
+    }
+
+    /* 3. Ensures the "Performance:", "Responsiveness:" titles stay bold and clear */
+    .technical-wins b, 
+    .technical-wins strong {
+        display: block; /* Puts the title above the description for better fit */
+        margin-bottom: 5px;
+        color: #2d32b8; /* Matches your Elite theme */
+    }
+}
+
+
+/* 1. The Laptop/Desktop view (Your original working style) */
+body {
+    background: linear-gradient(-45deg, #0a192f, #7b2cbf, #008080, #ff6b6b);
+    background-size: 400% 400%;
+    animation: slowFlow 15s ease infinite;
+    background-attachment: fixed;
+}
+
+/* 2. The Mobile view (The custom fix) */
+@media screen and (max-width: 768px) {
+    body {
+        /* We keep the 400% so it stays "liquid," 
+           but we adjust the flow for the small screen */
+        background-size: 800% 800% !important; 
+        animation: slowFlow 10s ease infinite !important;
+    }
+}
+
+@keyframes slowFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Ensure the list inside the menu handles all items properly */
+.nav-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Give each list item some breathing room */
+.nav-links ul li {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+/* THE BOX */
+.pwa-banner {
+    display: block !important; /* Stops it from acting like a nav-link */
+    position: relative !important; /* Keeps it anchored to its spot */
+    background: #000 !important;
+    padding: 30px 20px !important;
+    margin: 40px auto !important;
+    width: 90% !important;
+    border-radius: 15px !important;
+    text-align: center !important;
+    height: auto !important;
+    z-index: 999 !important; /* Keeps it on top of the background flow */
+}
+
+/* THE TEXT */
+.pwa-banner p {
+    color: white !important;
+    display: block !important;
+    margin: 0 0 20px 0 !important; /* A 20px physical wall below the text */
+    font-size: 1.1rem !important;
+    width: 100% !important;
+}
+
+/* THE BUTTON (The Conflict Fix) */
+#banner-install-btn {
+    position: relative !important; /* Forces it to stay inside the black box */
+    top: auto !important; /* Kills any "top: 0" from your nav links */
+    left: auto !important; /* Kills any "left: 0" from your nav links */
+    display: inline-block !important;
+    background: #007bff !important;
+    color: #ffffff !important;
+    padding: 12px 30px !important;
+    border-radius: 8px !important;
+    border: none !important;
+    font-weight: bold !important;
+    text-decoration: none !important;
+    margin: 0 auto !important;
+    margin-top: 10px !important;
+}
+
+
+
+/* --- THE LOGO SHOWCASE SECTION (RESPONSIVE) --- */
+
+.logos-container {
+    padding: 80px 0; /* Standard padding */
+    margin: 40px 0;
+    background: rgba(255, 255, 255, 0.05) !important; 
+    backdrop-filter: blur(15px) saturate(150%) !important; 
+    -webkit-backdrop-filter: blur(15px) saturate(150%);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+.section-title {
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 40px;
+    font-size: 1.8rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+.marquee {
+    display: flex;
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+.marquee-content {
+    display: flex;
+    gap: 100px; /* Big gap for Desktop */
+    animation: scroll-left 40s linear infinite;
+}
+
+.marquee-content img {
+    height: 60px; /* Big for Laptop */
+    width: auto;
+    filter: none !important;      
+    opacity: 1 !important;       
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+
+/* --- THE ENGINE: This makes them move! --- */
+
+/* This moves the first row to the left */
+@keyframes scroll-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } 
+}
+
+/* This moves the second row to the right */
+@keyframes scroll-right {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+}
+
+/* --- THE CONNECTION: Apply the engine to the content --- */
+.marquee-content {
+    display: flex;
+    /* Ensure this matches the name in the @keyframes above */
+    animation: scroll-left 40s linear infinite !important; 
+}
+
+.marquee-reverse .marquee-content {
+    /* Ensure this matches the scroll-right name */
+    animation: scroll-right 40s linear infinite !important;
+}
+
+/* --- THE MEDIA QUERIES (THE RESPONSIVE MAGIC) --- */
+
+/* 1. TABLET VIEW (iPad/Tablets) */
+@media screen and (max-width: 1024px) {
+    .logos-container {
+        padding: 60px 0;
+    }
+    .marquee-content img {
+        height: 50px; /* Slightly smaller */
+    }
+    .marquee-content {
+        gap: 70px; /* Tighter gap */
+    }
+}
+
+/* 2. MOBILE VIEW (Phones) */
+@media screen and (max-width: 768px) {
+    .logos-container {
+        padding: 50px 0;
+    }
+    .section-title {
+        font-size: 1.4rem; /* Smaller title so it doesn't wrap weirdly */
+        margin-bottom: 30px !important;
+    }
+    .marquee {
+        margin-bottom: 30px;
+    }
+    .marquee-content img {
+        height: 40px; /* Much smaller for phone screens */
+    }
+    .marquee-content {
+        gap: 50px; /* Narrow gap for small screens */
+        animation-duration: 25s; /* Speed it up so it feels more active on mobile */
+    }
+}
+
+/* 3. VERY SMALL PHONES */
+@media screen and (max-width: 480px) {
+    .marquee-content img {
+        height: 35px;
+    }
+    .marquee-content {
+        gap: 40px;
+    }
+}

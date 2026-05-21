@@ -1,0 +1,115 @@
+/* --- Add this to your search_engine.css --- */
+
+/* Ensures the modal is hidden by default and sits above everything when active */
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    overflow: auto;
+}
+
+/* Centers the video player and gives it space */
+.modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 800px;
+    margin: 10% auto;
+    background: transparent;
+}
+
+/* The 'X' button is now pinned inside the modal content, not the page header */
+.close {
+    position: absolute;
+    top: -45px; 
+    right: 0;
+    color: #ffffff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10001;
+    transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #00d2ff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Ensure the iframe remains responsive inside the modal */
+#videoPlayer {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+}
+
+#search-section {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.search-box {
+    position: relative; /* This is the key */
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 95%; /* Slightly wider for mobile */
+    max-width: 600px;
+    margin: 30px auto;
+    height: 55px; /* Fixed height so it doesn't collapse */
+    overflow: hidden;
+}
+
+.search-box input {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 1rem;
+    padding-left: 25px;   /* Space for cursor on the left */
+    padding-right: 110px; /* IMPORTANT: This stops text from hiding under the button */
+    text-align: left;
+}
+
+.search-box button {
+    position: absolute; /* Fixes button to the right side */
+    right: 5px;
+    background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 40px;
+    cursor: pointer;
+    font-weight: 600;
+    height: 45px; /* Slightly smaller than the box */
+}
+
+/* This makes the placeholder text look professional */
+.search-box input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.9rem;
+}
+
+/* Styling for the Auto-Suggestion List */
+#results {
+    margin-top: 10px;
+    width: 95%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 100;
+    position: relative;
+}
+
